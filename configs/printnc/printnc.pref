@@ -28,7 +28,7 @@ height = 750
 use_toolmeasurement = False
 gtk_theme = Follow System Theme
 grid_size = 1.0
-view = x
+view = p
 mouse_btn_mode = 4
 hide_cursor = False
 system_name_tool = Tool
@@ -67,4 +67,5 @@ show_preview_on_offset = False
 use_keyboard_shortcuts = False
 tool_in_spindle = 0
 offset_axis_x = 0.0
+hide_tooltips = False
 

@@ -10,6 +10,21 @@ loadrt hm2_eth board_ip="10.10.10.10" config=" num_encoders=1 num_pwmgens=0 num_
 setp    hm2_7i96.0.watchdog.timeout_ns 5000000
 loadrt pid names=pid.x,pid.y,pid.y2,pid.z,pid.s
 
+
+# mjt debounce -- Using default config from some random webpage "using debounce"
+#   cfg 2 means 1 debounce group with 2 filters.  (one for each channel) 
+#   delay is how many thread cycles the input has to be in the right state to "stick".  < 2 takes no effect.  Trying 100 for now... 
+# Must also change all signals to map into/out of debounce.0.0 and etc. rather than use the pin directly.
+loadrt debounce cfg=2
+setp debounce.0.delay 200
+addf debounce.0 servo-thread
+
+net min-home-y-raw => debounce.0.0.in
+net min-home-y2-raw => debounce.0.1.in
+net min-home-y <= debounce.0.0.out 
+net min-home-y2 <= debounce.0.1.out 
+
+
 addf hm2_7i96.0.read          servo-thread
 addf motion-command-handler   servo-thread
 addf motion-controller        servo-thread
@@ -30,10 +45,12 @@ net min-home-x     <=  hm2_7i96.0.gpio.000.in_not
 net max-home-x     <=  hm2_7i96.0.gpio.001.in_not  
 
 # --- MIN-HOME-Y ---
-net min-home-y     <=  hm2_7i96.0.gpio.002.in_not
+# debounced... net min-home-y     <=  hm2_7i96.0.gpio.002.in_not
+net min-home-y-raw     <=  hm2_7i96.0.gpio.002.in_not
 
 # --- MIN-HOME-Y2 ---
-net min-home-y2     <=  hm2_7i96.0.gpio.003.in_not
+# debounced... net min-home-y2     <=  hm2_7i96.0.gpio.003.in_not
+net min-home-y2-raw     <=  hm2_7i96.0.gpio.003.in_not
 
 # --- MAX-HOME-Z ---
 net max-home-z     <=  hm2_7i96.0.gpio.004.in_not

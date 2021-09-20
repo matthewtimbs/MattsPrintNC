@@ -1,0 +1,16 @@
+; this is a test macro
+
+Omjt_test sub
+
+G17 ;(plane select)
+G21 ;(Units mm)
+G54 ;(coordinate system.  Global coord?)
+G61 ;(exact path mode)
+G40 ;(cutter radius comp off)
+G49 ;(cancel tool length comp)
+G80 ;(rigid tapping)
+G90 ;(Distance Mode)
+
+G0 X 200 Y 200 Z -50  ;(Rapid Move)
+
+Omjt_test endsub

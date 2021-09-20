@@ -1,0 +1,16 @@
+; this is a test macro
+
+Omjt_test sub
+
+G17 
+G21 
+G54 
+G61 
+G40 
+G49 
+G80 
+G90 
+
+G0 X 200 Y 200 Z -50  
+
+Omjt_test endsub

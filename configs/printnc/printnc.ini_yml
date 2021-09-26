@@ -1,0 +1,25 @@
+{
+  "disclaimer": "# Generated with Mustache.",
+  "xmin":"-5",
+  "xmax":"987",
+  "ymin":"-5",
+  "ymax":"597",
+  "zmin":"-135",
+  "zmax":"5",
+  "dirsetup":"10000",
+  "dirhold":"10000",
+  "steplen":"3500",
+  "stepspace":"3500",
+  "xystepscale":"100",
+  "xymaxvelocity":"184",
+  "xymaxacceleration":"800",
+  "xystepgenmaxvel":"229.17",
+  "xystepgenmaxaccel":"1000",
+  "xyp":"910.42592456",
+  "zmaxvelocity":"74",
+  "zmaxacceleration":"320",
+  "zstepgenmaxvel":"91.67",
+  "zstepgenmaxaccel":"400",
+  "p":"910.42592456"
+
+}

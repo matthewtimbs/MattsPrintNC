@@ -3,7 +3,7 @@
 # If you make changes to this file, they will be
 # overwritten when you run PNCconf again
 
-# Generated with Mustache.
+{{disclaimer}}
 
 #INI uses Units per second, GMOCCAPY uses Units per minute.
 
@@ -84,7 +84,7 @@ COORDINATES =  X Y Y Z
 LINEAR_UNITS = mm
 ANGULAR_UNITS = degree
 DEFAULT_LINEAR_VELOCITY = 18.33
-MAX_LINEAR_VELOCITY = 184
+MAX_LINEAR_VELOCITY = {{xymaxvelocity}}
 POSITION_FILE = position.txt
 
 [EMCIO]
@@ -98,10 +98,10 @@ TOOL_CHANGE_QUILL_UP = 1
 #    MIN/MAX AXIS limits are the limits to range of motion after homing,  JOINT values of same are limits before homing.  exceeding aborts motion
 # 400
 [AXIS_X]
-MAX_VELOCITY = 184
-MAX_ACCELERATION = 800
-MIN_LIMIT = -5
-MAX_LIMIT = 987
+MAX_VELOCITY = {{xymaxvelocity}}
+MAX_ACCELERATION = {{xymaxacceleration}}
+MIN_LIMIT = {{xmin}}
+MAX_LIMIT = {{xmax}}
 
 
 [JOINT_0]
@@ -109,16 +109,16 @@ TYPE = LINEAR
 HOME = 0.0
 FERROR = 10.0
 MIN_FERROR = 1.0
-MAX_VELOCITY = 184
-MAX_ACCELERATION = 800
-MIN_LIMIT = -5
-MAX_LIMIT = 987
+MAX_VELOCITY = {{xymaxvelocity}}
+MAX_ACCELERATION = {{xymaxacceleration}}
+MIN_LIMIT = {{xmin}}
+MAX_LIMIT = {{xmax}}
 
 # The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
 # If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
-STEPGEN_MAXVEL = 229.17
-STEPGEN_MAXACCEL = 1000
-P = 910.42592456
+STEPGEN_MAXVEL = {{xystepgenmaxvel}}
+STEPGEN_MAXACCEL = {{xystepgenmaxaccel}}
+P = {{p}}
 I = 0.0
 D = 0.0
 FF0 = 0.0
@@ -127,11 +127,11 @@ FF2 = 0.0
 BIAS = 0.0
 DEADBAND = 0.0
 MAX_OUTPUT = 0.0
-DIRSETUP   = 10000
-DIRHOLD    = 10000
-STEPLEN    = 3500
-STEPSPACE  = 3500
-STEP_SCALE = 100
+DIRSETUP   = {{dirsetup}}
+DIRHOLD    = {{dirhold}}
+STEPLEN    = {{steplen}}
+STEPSPACE  = {{stepspace}}
+STEP_SCALE = {{xystepscale}}
 BACKLASH = 0.0
 
 HOME_OFFSET = -5.000000
@@ -145,26 +145,26 @@ HOME_SEQUENCE = 1
 
 #****************************************** 400
 [AXIS_Y]
-MAX_VELOCITY = 184
-MAX_ACCELERATION = 800
-MIN_LIMIT = -5
-MAX_LIMIT = 597
+MAX_VELOCITY = {{xymaxvelocity}}
+MAX_ACCELERATION = {{xymaxacceleration}}
+MIN_LIMIT = {{ymin}}
+MAX_LIMIT = {{ymax}}
 
 [JOINT_1]
 TYPE = LINEAR
 HOME = 0
 FERROR = 10.0
 MIN_FERROR = 1.0
-MAX_VELOCITY = 184
-MAX_ACCELERATION = 800
-MIN_LIMIT = -5
-MAX_LIMIT = 597
+MAX_VELOCITY = {{xymaxvelocity}}
+MAX_ACCELERATION = {{xymaxacceleration}}
+MIN_LIMIT = {{ymin}}
+MAX_LIMIT = {{ymax}}
 
 # The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
 # If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
-STEPGEN_MAXVEL = 229.17
-STEPGEN_MAXACCEL = 1000
-P = 910.42592456
+STEPGEN_MAXVEL = {{xystepgenmaxvel}}
+STEPGEN_MAXACCEL = {{xystepgenmaxaccel}}
+P = {{p}}
 I = 0.0
 D = 0.0
 FF0 = 0.0
@@ -173,11 +173,11 @@ FF2 = 0.0
 BIAS = 0.0
 DEADBAND = 0.0
 MAX_OUTPUT = 0.0
-DIRSETUP   = 10000
-DIRHOLD    = 10000
-STEPLEN    = 3500
-STEPSPACE  = 3500
-STEP_SCALE = 100
+DIRSETUP   = {{dirsetup}}
+DIRHOLD    = {{dirhold}}
+STEPLEN    = {{steplen}}
+STEPSPACE  = {{stepspace}}
+STEP_SCALE = {{xystepscale}}
 BACKLASH = 0.0
 
 HOME_OFFSET = -5.000000
@@ -194,16 +194,16 @@ TYPE = LINEAR
 HOME = 0
 FERROR = 10.0
 MIN_FERROR = 1.0
-MAX_VELOCITY = 184
-MAX_ACCELERATION = 800
-MIN_LIMIT = -5
-MAX_LIMIT = 597
+MAX_VELOCITY = {{xymaxvelocity}}
+MAX_ACCELERATION = {{xymaxacceleration}}
+MIN_LIMIT = {{ymin}}
+MAX_LIMIT = {{ymax}}
 
 # The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
 # If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
-STEPGEN_MAXVEL = 229.17
-STEPGEN_MAXACCEL = 1000
-P = 910.42592456
+STEPGEN_MAXVEL = {{xystepgenmaxvel}}
+STEPGEN_MAXACCEL = {{xystepgenmaxaccel}}
+P = {{p}}
 I = 0.0
 D = 0.0
 FF0 = 0.0
@@ -212,11 +212,11 @@ FF2 = 0.0
 BIAS = 0.0
 DEADBAND = 0.0
 MAX_OUTPUT = 0.0
-DIRSETUP   = 10000
-DIRHOLD    = 10000
-STEPLEN    = 3500
-STEPSPACE  = 3500
-STEP_SCALE = 100
+DIRSETUP   = {{dirsetup}}
+DIRHOLD    = {{dirhold}}
+STEPLEN    = {{steplen}}
+STEPSPACE  = {{stepspace}}
+STEP_SCALE = {{xystepscale}}
 BACKLASH = 0.0
 
 HOME_OFFSET = -5.000000
@@ -230,26 +230,26 @@ HOME_SEQUENCE = -2
 
 #******************************************
 [AXIS_Z]
-MAX_VELOCITY = 74
-MAX_ACCELERATION = 320
-MIN_LIMIT = -135
-MAX_LIMIT = 5
+MAX_VELOCITY = {{zmaxvelocity}}
+MAX_ACCELERATION = {{zmaxacceleration}}
+MIN_LIMIT = {{zmin}}
+MAX_LIMIT = {{zmax}}
 
 [JOINT_3]
 TYPE = LINEAR
 HOME = 0
 FERROR = 10.0
 MIN_FERROR = 1.0
-MAX_VELOCITY = 74
-MAX_ACCELERATION = 320
-MIN_LIMIT = -135
-MAX_LIMIT = 5
+MAX_VELOCITY = {{zmaxvelocity}}
+MAX_ACCELERATION = {{zmaxacceleration}}
+MIN_LIMIT = {{zmin}}
+MAX_LIMIT = {{zmax}}
 
 # The values below should be 25% larger than MAX_VELOCITY and MAX_ACCELERATION
 # If using BACKLASH compensation STEPGEN_MAXACCEL should be 100% larger.
-STEPGEN_MAXVEL = 91.67
-STEPGEN_MAXACCEL = 400
-P = 910.42592456
+STEPGEN_MAXVEL = {{zstepgenmaxvel}}
+STEPGEN_MAXACCEL = {{zstepgenmaxaccel}}
+P = {{p}}
 I = 0.0
 D = 0.0
 FF0 = 0.0
@@ -258,10 +258,10 @@ FF2 = 0.0
 BIAS = 0.0
 DEADBAND = 0.0
 MAX_OUTPUT = 0.0
-DIRSETUP   = 10000
-DIRHOLD    = 10000
-STEPLEN    = 3500
-STEPSPACE  = 3500
+DIRSETUP   = {{dirsetup}}
+DIRHOLD    = {{dirhold}}
+STEPLEN    = {{steplen}}
+STEPSPACE  = {{stepspace}}
 STEP_SCALE = 100.0
 
 BACKLASH = 0.0

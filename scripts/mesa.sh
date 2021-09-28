@@ -1,11 +1,7 @@
 #!/bin/bash
 
-echo "Switching to Mesa CNC Controller LAN connection - set switchbox to A"
+echo "Switching to Internet LAN connection - set switchbox to B"
 
-wicd-cli --disconnect --wired
-
-wicd-cli --connect --network 3 --wired
-
-wicd-cli --status
-
+nmcli con down "MESA CNC" "Internet Wired"
+nmcli con up "MESA CNC"
 

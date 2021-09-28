@@ -2,11 +2,7 @@
 
 echo "Switching to Internet LAN connection - set switchbox to B"
 
-wicd-cli --disconnect --wired
+nmcli con down "MESA CNC" "Internet Wired"
+nmcli con up "Internet Wired"
 
-wicd-cli --load-profile "wiredonline" --wired
-
-wicd-cli --connect  --wired
-
-wicd-cli --status
 

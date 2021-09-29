@@ -11,6 +11,8 @@ setp    hm2_7i96.0.watchdog.timeout_ns 5000000
 loadrt pid names=pid.x,pid.y,pid.y2,pid.z,pid.s
 
 
+
+
 # mjt debounce -- Using default config from some random webpage "using debounce"
 #   cfg 2 means 1 debounce group with 2 filters.  (one for each channel) 
 #   delay is how many thread cycles the input has to be in the right state to "stick".  < 2 takes no effect.  Trying 100 for now... 
@@ -360,10 +362,17 @@ net machine-is-enabled        <=  motion.motion-enabled
 
 #  ---digital in / out signals---
 
-#  ---estop signals---
-
+#  ---estop software
 net estop-out     <=  iocontrol.0.user-enable-out
 net estop-out     =>  iocontrol.0.emc-enable-in
+
+# estop - hardware.
+#loadrt estop_latch
+#addf estop-latch.0 servo-thread
+#net estop-loopout iocontrol.0.emc-enable-in <= estop-latch.0.ok-out
+#net estop-loopin iocontrol.0.user-enable-out => estop-latch.0.ok-in
+#net estop-reset iocontrol.0.user-request-enable => estop-latch.0.reset
+#net remote-estop estop-latch.0.fault-in <= hm2_7i96.0.gpio.009.in
 
 #  ---manual tool change signals---
 

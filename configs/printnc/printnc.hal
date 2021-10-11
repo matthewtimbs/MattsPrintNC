@@ -343,7 +343,8 @@ net spindle-manual-cw     halui.spindle.0.forward
 net spindle-manual-ccw    halui.spindle.0.reverse
 net spindle-manual-stop   halui.spindle.0.stop
 net machine-is-on         halui.machine.is-on
-net jog-speed             halui.axis.jog-speed
+#MJT removed to let xbox controller work.  Not sure why this caused error 
+#net jog-speed             halui.axis.jog-speed
 net MDI-mode              halui.mode.is-mdi
 
 #  ---coolant signals---

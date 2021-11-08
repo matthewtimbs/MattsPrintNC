@@ -1,0 +1,2 @@
+1/4" end mill.  3/4" plywood (18.54mm)
+Need 104 on Y, 342 on X.  Zero is bottom left corner on wasteboard.

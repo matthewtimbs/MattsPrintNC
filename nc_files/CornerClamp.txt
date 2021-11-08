@@ -1,0 +1,9 @@
+16X20 material
+z zero is wasteboard
+16 is Y, 20 is X.  3/4" stock
+
+1/4" bit.
+
+Run the first one "holes" first, then add screws then run contour.
+
+Makes an L shaped bracket and 8 pcs to glue to make 4 90 degree clamping jigs.

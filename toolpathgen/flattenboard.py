@@ -2,6 +2,24 @@
 
 import argparse
 import sys
+
+
+line_number = 0
+
+def get_next_line_number():
+    global line_number
+    line_number += 5
+    return line_number
+# MJT add comment optional param.
+def add_gcode_lines(command):
+    global gcode
+
+    for line in command.split('\n'):
+        if not line:
+            gcode.append(line)
+        else:
+            gcode.append("N" + str(get_next_line_number()) + " " + line)
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--xmax', type=float, help='Max X travel')
 parser.add_argument('--ymax', type=float, help='Max Y travel')
@@ -14,121 +32,72 @@ parser.add_argument('--cutdepth', type=float, help='cut depth in mm, s/b less th
 
 args = parser.parse_args()
 
-if args.xmax is not None and args.ymax is not None:
-    print("x " + str(args.xmax) + "  y " + str(args.ymax))
-    print("\n\n")
-else:
+if args.xmax is None or args.ymax is None:
     parser.print_help()
     print ("\n")
     sys.exit()
 
 
-print("continue")
+gcode = []
+# add prefix
+gcode.append("%")
+gcode.append("({0} - Generated via flattenboard.py)".format(args.name))
+gcode.append("(Use the {0} mm diameter bit)".format(args.bitwidth))
+gcode.append("(This cuts {0} mm below Z zero)".format(args.cutdepth))
 
+# Setup, with feed, speed etc then do first out-and-back pass  on Y0
 script =  """
-%%
-({0} - Generated via flattenboard.py)
-(This cuts {2}mm below Z zero)
 
-N10 G90 G94 G17 G91.1
-N15 G21
+G90 G94 G17 G91.1
+G21
 
-N20 G53 G0 Z0.
+G53 G0 Z0.
 
-N25 T1 M6
-N30 S{4} M3
-N35 G54
-N40 M8
-N45 G0 X0 Y0 Z2
+T1 M6
+S{0} M3
+G54
+M8
+G0 X0 Y0 Z2
 
-N56 G1 Z{2}  F{3}.
-N60
+G1 Z{1}  F{2}.
 
-N61 G18 G1 X[#<XMax>] Z{2}
-N62 G1 X0
+G1 X{3} Z{1}
+G1 X0
 """
 
-print(script.format(args.name, str(args.xmax),str(args.cutdepth), str(args.feed), str(args.speed)))
-
-# print(script)
+add_gcode_lines(script.format(args.speed, str(args.cutdepth),str(args.feed), str(args.xmax), str(args.speed)))
 
 
 
-"""
-N63 G1 Y10
-N64 G1 X[#<XMax>]
-N66 G1 Y20
-N68 G1 X0
-N69 G1 Y30
-N70 G1 X[#<XMax>]
-G1 Y40
-G1 X0
+y_position = 0
+y_advance_distance = args.bitwidth * args.overlap
+num_trips = args.ymax / y_advance_distance
 
-G1 Y50
-G1 X[#<XMax>]
-G1 Y60
-G1 X0
-G1 Y70
-G1 X[#<XMax>]
-G1 Y80
-G1 X0
-G1 Y90
-G1 X[#<XMax>]
-G1 Y100
-G1 X0
-G1 Y110
-G1 X[#<XMax>]
-G1 Y120
-G1 X0
-G1 Y130
-G1 X[#<XMax>]
-G1 Y140
-G1 X0
-G1 Y150
-G1 X[#<XMax>]
-G1 Y160
-G1 X0
-G1 Y170
-G1 X[#<XMax>]
-G1 Y180
-G1 X0
-G1 Y190
-G1 X[#<XMax>]
-G1 Y200
-G1 X0
-G1 Y210
-G1 X[#<XMax>]
-G1 Y220
-G1 X0
-G1 Y230
-G1 X[#<XMax>]
-G1 Y240
-G1 X0
-G1 Y250
-G1 X[#<XMax>]
-G1 Y260
-G1 X0
-G1 Y270
-G1 x[#<XMax>]
-G1 Y280
-G1 X0
-G1 Y290
-G1 X[#<XMax>]
-G1 Y300
-G1 X0
-G1 Y310
-G1 X[#<XMax>]
-G1 Y320
-G1 X0
-G1 Y330
-G1 X[#<XMax>]
+y_trip_index = 0
+while y_trip_index < num_trips:
+    # Each loop does an outbound trip and an inbound trip, thus the 2x increment of the index.
+    y_position+=y_advance_distance
+    add_gcode_lines("G1 Y{0}".format(y_position)) #Advance for outbound trip
+    y_trip_index+=1
+
+    add_gcode_lines("G1 X{0}".format(args.xmax)) #Do outbound trip (x0 to xmax)
+
+    y_position+=y_advance_distance
+    add_gcode_lines("G1 Y{0}".format(y_position)) #Advance for outbound trip
+    y_trip_index+=1
+
+    add_gcode_lines("G1 X0") #Do inbound trip (x0 to xmax)
 
 
+add_gcode_lines("""
+G1 Z15.
+G17
+M9
+G0 Z5 X0 Y0
+M30
+""")
 
-N365 G1 Z15.
-N370 G17
-N375 M9
-N380  G0 Z5 X0 Y0
-N385 M30
-# %%
-"""
+gcode.append("%")
+
+for line in gcode:
+    print(line)
